@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}}</title>
+</head>
+<body>
+    <h1>{{user.greet()}}</h1>
+    <img src="{{user.image_url}}" alt="{{user.greet()}}"
+     class="user_img">
+
+    <form action="">
+     <button class="edit-btn" formaction="/users/{{user.id}}/edit"
+     formmethod="GET">
+        Edit
+     </button>
+     <button class="delete-btn" formaction="/users/{{user.id}}/delete"
+     formmethod="POST">
+        Delete
+     </button>
+    </form>
+
+    <a href="/">Go back</a>
+</body>
+</html>
