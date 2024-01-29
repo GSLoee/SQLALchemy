@@ -19,6 +19,13 @@
      formmethod="POST">
         Delete
      </button>
+     <h2>Posts</h2>
+     <ul>
+        {% for post in post.posts %}
+        <li><a href="/{{post.id}}">{{post.post_title()}}</a></li>
+        {% endfor %}
+     </ul>
+     <button class="add-post" formaction="/users/{{user.id}}/posts/new">Add Post</button>
     </form>
 
     <a href="/">Go back</a>

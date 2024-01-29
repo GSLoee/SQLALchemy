@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, request, render_template, redirect, flash, session 
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -37,8 +37,9 @@ def add_user():
 
 @app.route('/<int:user_id>')
 def get_user(user_id):
+    post = User.query.get_or_404(user_id)
     user = User.query.get_or_404(user_id)
-    return render_template('details.html', user=user)
+    return render_template('details.html', user=user, post=post)
 
 
 @app.route('/users/<int:user_id>/delete', methods=["POST"])
@@ -51,8 +52,9 @@ def delete_user(user_id):
 
 @app.route('/users/<int:user_id>/edit')
 def edit_page(user_id):
-    
-    return render_template('edit.html')
+    user = User.query.get_or_404(user_id)
+
+    return render_template('edit.html', user=user)
 
 @app.route('/users/<int:user_id>/edit', methods=["POST"])
 def edit_user(user_id):
@@ -64,4 +66,23 @@ def edit_user(user_id):
     db.session.add(user)
     db.session.commit()
 
-    return redirect('/')
+    return redirect(f"/{user.id}")
+
+@app.route('/users/<int:user_id>/posts/new')
+def new_post(user_id):
+    post = User.query.get_or_404(user_id)
+    user = User.query.get_or_404(user_id)
+    return render_template('post.html', user=user, post=post)
+
+@app.route('/users/<int:user_id>/posts/new', methods=["POST"])
+def edit_post(user_id):
+    post = User.query.get_or_404(user_id)
+    user = Post.query.get_or_404(user_id)
+    user.title = request.form['title'],
+    user.content = request.form['content']
+                
+    db.session.add(user)
+    db.session.commit()   
+
+    return redirect(f"/{user.id}") 
+
