@@ -70,19 +70,57 @@ def edit_user(user_id):
 
 @app.route('/users/<int:user_id>/posts/new')
 def new_post(user_id):
-    post = User.query.get_or_404(user_id)
+    # post = Post.query.get_or_404(user_id)
     user = User.query.get_or_404(user_id)
-    return render_template('post.html', user=user, post=post)
+    return render_template('post.html', user=user)
 
 @app.route('/users/<int:user_id>/posts/new', methods=["POST"])
-def edit_post(user_id):
-    post = User.query.get_or_404(user_id)
-    user = Post.query.get_or_404(user_id)
-    user.title = request.form['title'],
-    user.content = request.form['content']
-                
-    db.session.add(user)
+def add_post(user_id):
+    user = User.query.get_or_404(user_id)
+    # post = Post.query.get_or_404(user_id)
+    title = request.form['title']
+    content = request.form['content']
+    
+    new_post = Post(title=title, content=content, user_id=user_id)
+    db.session.add(new_post)
     db.session.commit()   
 
     return redirect(f"/{user.id}") 
 
+@app.route('/users/<int:user_id>/posts/<int:post_id>')
+def view_post(user_id, post_id):
+    user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('edit_post.html', user=user, post=post)
+
+@app.route('/users/<int:user_id>/posts/<int:post_id>/delete', methods=["POST"])
+def delete_post(user_id, post_id):
+    user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f"/{user.id}")
+
+@app.route('/users/<int:user_id>/posts/<int:post_id>/edit')
+def update_post(user_id, post_id):
+    user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+
+
+    return render_template('update_post.html',user=user, post=post)
+
+@app.route('/users/<int:user_id>/posts/<int:post_id>/edit', methods=["POST"])
+def edit_post(user_id, post_id):
+    user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+
+    post.title = request.form['title']
+    post.content = request.form['content']
+    
+    db.session.add(post)
+    db.session.commit()   
+
+    return redirect(f"/users/{user.id}/posts/{post.id}")

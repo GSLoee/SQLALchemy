@@ -56,3 +56,6 @@ class Post(db.Model):
 
     def post_title(self):
         return f"{self.title}"
+    
+    def post_content(self):
+        return f"{self.content}"

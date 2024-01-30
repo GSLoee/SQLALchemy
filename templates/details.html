@@ -17,16 +17,17 @@
      </button>
      <button class="delete-btn" formaction="/users/{{user.id}}/delete"
      formmethod="POST">
-        Delete
+        Delete  
      </button>
+    </form>
      <h2>Posts</h2>
      <ul>
-        {% for post in post.posts %}
-        <li><a href="/{{post.id}}">{{post.post_title()}}</a></li>
+        {% for post in user.posts %}
+        <li><a href="/users/{{user.id}}/posts/{{post.id}}">{{post.post_title()}}</a></li>
         {% endfor %}
      </ul>
-     <button class="add-post" formaction="/users/{{user.id}}/posts/new">Add Post</button>
-    </form>
+     <a href="/users/{{user.id}}/posts/new">Add Post</a>
+    
 
     <a href="/">Go back</a>
 </body>
