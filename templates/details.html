@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.first_name}}</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <h1>{{user.greet()}}</h1>
@@ -26,7 +27,7 @@
         <li><a href="/users/{{user.id}}/posts/{{post.id}}">{{post.post_title()}}</a></li>
         {% endfor %}
      </ul>
-     <a href="/users/{{user.id}}/posts/new">Add Post</a>
+     <a href="/users/{{user.id}}/posts/new" id="add-post-btn">Add Post</a>
     
 
     <a href="/">Go back</a>

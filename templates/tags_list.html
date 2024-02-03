@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All tags</title>
+</head>
+<body>
+    <h1>Tags</h1>
+    
+    <ul>
+        {% for tag in tags %}
+        <li><a href="/tags/{{tag.id}}">{{tag.tag_name()}}</a></li>
+        {% endfor %}
+    </ul>
+    <form action="/tags/new">
+        <input type="submit" name="add_tag" id="add_tag_btn" value="Add Tag">
+    </form>
+    <a href="/">Go Home</a>
+</body>
+</html>
